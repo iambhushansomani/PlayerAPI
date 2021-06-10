@@ -9,8 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PlayerAPI.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PlayerAPI.API
+    
 {
     public class Startup
     {
@@ -21,9 +24,15 @@ namespace PlayerAPI.API
 
         public IConfiguration Configuration { get; }
 
+        
+
+        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PlayerDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection_string")));
+
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
