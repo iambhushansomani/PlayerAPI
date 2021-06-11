@@ -8,9 +8,9 @@ namespace PlayerAPI.Services.Interfaces
 {
     public interface IPlayerService
     {
-        public List<PlayerMaster> getBatsman(int numberofbatsman, PlayerDTO playerDTO);
-        public List<PlayerMaster> getBowler(int numberofbowler, PlayerDTO playerDTO);
+        public List<PlayerMaster> getBatsman(int numberofbatsman, PlayerDTO playerdto);
+        public List<PlayerMaster> getBowler(int numberofbowler, PlayerDTO playerdto);
 
-        public List<PlayerMaster> getWeeketKeeper(int numberofwicketkeeper, PlayerDTO playerDTO);
+        public List<PlayerMaster> getWeeketKeeper(int numberofwicketkeeper, PlayerDTO playerdto);
     }
 }

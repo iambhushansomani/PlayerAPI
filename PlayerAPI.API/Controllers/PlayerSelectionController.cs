@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PlayerAPI.Services.Implementation;
 using PlayerAPI.API.Models;
 using PlayerAPI.Models.Models;
@@ -33,36 +30,36 @@ namespace PlayerAPI.API.Controllers
 
         [HttpPost]
         [Route("getBatsmanList")]
-        public List<PlayerMaster> getBatsmanList( PlayerDTO playerDTO)
+        public List<PlayerMaster> getBatsmanList( PlayerDTO playerdto)
         {
             PlayerService playerservice = new PlayerService();
-            return playerservice.getBatsman(5, playerDTO);
+            return playerservice.getBatsman(5, playerdto);
         }
 
 
         [HttpPost]
         [Route("getBowlerList")]
-        public List<PlayerMaster> getBowlerList( PlayerDTO playerDTO)
+        public List<PlayerMaster> getBowlerList( PlayerDTO playerdto)
         {
             PlayerService playerservice = new PlayerService();
-            return playerservice.getBowler(5,  playerDTO);
+            return playerservice.getBowler(5,  playerdto);
         }
 
 
         [HttpPost]
         [Route("getWicketKeeperList")]
-        public List<PlayerMaster> getWicketKeeperList( PlayerDTO playerDTO)
+        public List<PlayerMaster> getWicketKeeperList( PlayerDTO playerdto)
         {
             PlayerService playerservice = new PlayerService();
-            return playerservice.getWeeketKeeper(1, playerDTO);
+            return playerservice.getWeeketKeeper(1, playerdto);
         }
 
         [HttpPost]
         [Route("getPlayerList")]
-        public IEnumerable<PlayerMaster> getPlayerList(PlayerDTO playerDTO)
+        public List<PlayerMaster> getPlayerList(PlayerDTO playerdto)
         {
             PlayerService playerservice = new PlayerService();
-            return playerservice.finalList(playerDTO);
+            return playerservice.finalList(playerdto);
         }
 
         

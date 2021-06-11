@@ -11,63 +11,78 @@ namespace PlayerAPI.Services.Implementation
     public class PlayerService : IPlayerService
     {
         private PlayerDBContext dbcontectobj = new PlayerDBContext();
-        
-        public List<PlayerMaster> getBatsman(int numberofbatsman, PlayerDTO playerDTO)
+
+        public List<PlayerMaster> getBatsman(int numberofbatsman, PlayerDTO playerdto)
         {
             try
             {
                 var batsmanlist = (from n in dbcontectobj.PlayerMasters
-                                   where n.PlayerType == 1 && n.PlayerRuns > playerDTO.PlayerRuns && n.PlayerHeight > Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi < playerDTO.PlayerBmi
+                                   where n.PlayerType == 1 && n.PlayerRuns > playerdto.PlayerRuns && n.PlayerHeight > Convert.ToDecimal(playerdto.PlayerHeight) && n.PlayerBmi < playerdto.PlayerBmi
+                                  orderby n.PlayerRuns descending
                                    select n).Take(numberofbatsman);
 
-                return batsmanlist.ToList();
+               
+
+                if (batsmanlist.ToList().Count > 0)
+                    return batsmanlist.ToList();
+                else
+                    return null;
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-          
+
         }
 
-        public List<PlayerMaster> getBowler(int numberofbowler, PlayerDTO playerDTO)
+        public List<PlayerMaster> getBowler(int numberofbowler, PlayerDTO playerdto)
         {
             try
             {
                 var bowlerlist = (from n in dbcontectobj.PlayerMasters
-                                  where n.PlayerType==2 && n.PlayerWickets > playerDTO.PlayerWickets && n.PlayerHeight > Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi < playerDTO.PlayerBmi
+                                  where n.PlayerType == 2 && n.PlayerWickets > playerdto.PlayerWickets && n.PlayerHeight > Convert.ToDecimal(playerdto.PlayerHeight) && n.PlayerBmi < playerdto.PlayerBmi
+                                  orderby n.PlayerWickets descending
                                   select n).Take(numberofbowler);
-
-                return bowlerlist.ToList();
+                if (bowlerlist.ToList().Count > 0)
+                    return bowlerlist.ToList();
+                else
+                    return null;
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-        
+
         }
 
-        public List<PlayerMaster> getWeeketKeeper(int numberofwicketkeeper, PlayerDTO playerDTO)
+        public List<PlayerMaster> getWeeketKeeper(int numberofwicketkeeper, PlayerDTO playerdto)
         {
             var wicketkeeperlist = (from n in dbcontectobj.PlayerMasters
-                              where n.PlayerType == 3 && n.PlayerStumpings > playerDTO.PlayerStumpings && n.PlayerHeight> Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi< playerDTO.PlayerBmi
+                                    where n.PlayerType == 3 && n.PlayerStumpings > playerdto.PlayerStumpings && n.PlayerHeight > Convert.ToDecimal(playerdto.PlayerHeight) && n.PlayerBmi < playerdto.PlayerBmi
+                                    orderby n.PlayerStumpings descending
                                     select n).Take(numberofwicketkeeper);
+            if (wicketkeeperlist.ToList().Count > 0)
+                return wicketkeeperlist.ToList();
+            else
+                return null;
 
-            return wicketkeeperlist.ToList();
-             
         }
 
-        public List<PlayerMaster> finalList(PlayerDTO playerDTO)
+        public List<PlayerMaster> finalList(PlayerDTO playerdto)
         {
             try
             {
                 PlayerService playerserviceobj = new PlayerService();
                 List<PlayerMaster> finallist = new List<PlayerMaster>();
-                finallist.AddRange(playerserviceobj.getBatsman(5, playerDTO));
-                finallist.AddRange(playerserviceobj.getBowler(5, playerDTO));
-                finallist.AddRange(playerserviceobj.getWeeketKeeper(1, playerDTO));
-                if (finallist.Count == 11)
+                if(playerserviceobj.getBatsman(5, playerdto)!=null)
+                finallist.AddRange(playerserviceobj.getBatsman(5, playerdto));
+                if (playerserviceobj.getBowler(5, playerdto)!=null)
+                finallist.AddRange(playerserviceobj.getBowler(5, playerdto));
+                if (playerserviceobj.getWeeketKeeper(1, playerdto)!=null)
+                    finallist.AddRange(playerserviceobj.getWeeketKeeper(1, playerdto));
+                if (finallist.Count==11)
                     return finallist;
                 else
                     return null;
@@ -77,7 +92,7 @@ namespace PlayerAPI.Services.Implementation
 
                 throw ex;
             }
-           
+
         }
     }
 }
