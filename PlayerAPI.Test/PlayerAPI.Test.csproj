@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PlayerAPI.API\PlayerAPI.API.csproj" />
     <ProjectReference Include="..\PlayerAPI.Models\PlayerAPI.Models.csproj" />
     <ProjectReference Include="..\PlayerAPI.Services\PlayerAPI.Services.csproj" />
   </ItemGroup>

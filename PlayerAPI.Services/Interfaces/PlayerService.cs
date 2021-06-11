@@ -17,7 +17,7 @@ namespace PlayerAPI.Services.Implementation
             try
             {
                 var batsmanlist = (from n in dbcontectobj.PlayerMasters
-                                   where n.PlayerRuns > playerDTO.PlayerRuns && n.PlayerHeight > Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi < playerDTO.PlayerBmi
+                                   where n.PlayerType == 1 && n.PlayerRuns > playerDTO.PlayerRuns && n.PlayerHeight > Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi < playerDTO.PlayerBmi
                                    select n).Take(numberofbatsman);
 
                 return batsmanlist.ToList();
@@ -35,7 +35,7 @@ namespace PlayerAPI.Services.Implementation
             try
             {
                 var bowlerlist = (from n in dbcontectobj.PlayerMasters
-                                  where n.PlayerWickets > playerDTO.PlayerWickets && n.PlayerHeight > Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi < playerDTO.PlayerBmi
+                                  where n.PlayerType==2 && n.PlayerWickets > playerDTO.PlayerWickets && n.PlayerHeight > Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi < playerDTO.PlayerBmi
                                   select n).Take(numberofbowler);
 
                 return bowlerlist.ToList();
@@ -51,7 +51,7 @@ namespace PlayerAPI.Services.Implementation
         public List<PlayerMaster> getWeeketKeeper(int numberofwicketkeeper, PlayerDTO playerDTO)
         {
             var wicketkeeperlist = (from n in dbcontectobj.PlayerMasters
-                              where n.PlayerStumpings > playerDTO.PlayerStumpings && n.PlayerHeight> Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi< playerDTO.PlayerBmi
+                              where n.PlayerType == 3 && n.PlayerStumpings > playerDTO.PlayerStumpings && n.PlayerHeight> Convert.ToDecimal(playerDTO.PlayerHeight) && n.PlayerBmi< playerDTO.PlayerBmi
                                     select n).Take(numberofwicketkeeper);
 
             return wicketkeeperlist.ToList();
@@ -67,7 +67,10 @@ namespace PlayerAPI.Services.Implementation
                 finallist.AddRange(playerserviceobj.getBatsman(5, playerDTO));
                 finallist.AddRange(playerserviceobj.getBowler(5, playerDTO));
                 finallist.AddRange(playerserviceobj.getWeeketKeeper(1, playerDTO));
-                return finallist;
+                if (finallist.Count == 11)
+                    return finallist;
+                else
+                    return null;
             }
             catch (Exception ex)
             {
